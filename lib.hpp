@@ -26,6 +26,7 @@ using namespace std;
 typedef Eigen::Vector3d vec3;
 typedef Eigen::Matrix3d mat3;
 typedef Eigen::Vector2i vec;
+typedef Eigen::Vector3i v3;
 
 static unordered_map<string, int> names;
 
@@ -47,6 +48,12 @@ struct Hash {
 struct VHash {
     size_t operator ()(const vec& k) const {
         return ((uint64_t)k[1] << 32) + ((uint64_t)k[0] & 0xFFFFFFFFllu);
+    }
+};
+
+struct V3Hash {
+    size_t operator ()(const v3& k) const {
+        return (((uint64_t)k[2] & 0x1FFFFFllu) << 42) + (((uint64_t)k[1] & 0x1FFFFFllu) << 21) + ((uint64_t)k[0] & 0x1FFFFFllu);
     }
 };
 
